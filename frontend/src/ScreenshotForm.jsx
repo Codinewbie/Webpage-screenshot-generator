@@ -8,11 +8,12 @@ const ScreenshotForm = () => {
   const [screenshot, setScreenshot] = useState(null);
   const [loading, setLoading] = useState(false);
   const [copyText, setCopyText] = useState("Copy Image"); // Initial state for the button text
-
+ const [errorMessage, setErrorMessage] = useState(""); // State to hold error messages
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setErrorMessage(""); // Reset error message on new submission
 
     try {
       const response = await fetch("http://localhost:3000/screenshot", {
@@ -28,10 +29,13 @@ const ScreenshotForm = () => {
         const imageUrl = URL.createObjectURL(blob);
         setScreenshot(imageUrl);
       } else {
-        console.error("Failed to capture screenshot");
+        // Handle different error responses
+        const errorData = await response.json();
+        setErrorMessage("Something went wrong, please check you connection and try again!");
       }
     } catch (error) {
       console.error("Error:", error);
+      setErrorMessage("Something went wrong, please check you connection and try again!");
     } finally {
       setLoading(false);
     }
@@ -76,6 +80,11 @@ const ScreenshotForm = () => {
         >
           {loading ? "Loading..." : "Take Screenshot"}
         </button>
+        {errorMessage && (
+            <div className="mt-2 text-center text-red-500">
+              {errorMessage}
+            </div>
+          )}
       </form>
 
       {screenshot && (
@@ -103,10 +112,10 @@ const ScreenshotForm = () => {
         onClick={handleCopyImage}
         className="absolute top-0 right-0 text-center items-center  opacity-90 bg-slate-800 border-t border-r rounded rounded-r-none text-xs text-white px-2 py-1"
       >
-        {copyText === "Copy image" ? (
-          <i className="bx bx-copy text-xs pr-1" style={{ color: '#ffffff' }}></i>
-        ) : (
+        {copyText === "Copied!" ? (
           <i className='bx bx-check text-sm pr-1' style={{color:'#ffffff'}} ></i>
+        ) : (
+          <i className="bx bx-copy text-xs pr-1" style={{ color: '#ffffff' }}></i>
         )}
         {copyText}
       </button>

@@ -15,7 +15,7 @@ const Header = () => {
     <div className = " sticky  top-0   z-[1000] bg-slate-800  border-b border-b-green-600">
     <nav className=" mx-4 ">
       <div className="flex items-center justify-between py-2 md:py-4">
-      <Link to = "Home" smooth = {true} duration={500} className ="duration-300 font-bold z-[1] text-green-600 hover:text-blue-600 cursor-pointer">
+      <Link to = "Home" smooth = {true} duration={500} className ="duration-300 font-bold z-[1] text-green-600 cursor-pointer">
       SnapTheWeb
           </Link>
         {/* <a className="text-xl text-green-600 font-bold z-[1]">SnapTheWeb</a> */}
