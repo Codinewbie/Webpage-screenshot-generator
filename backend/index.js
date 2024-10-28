@@ -2,6 +2,8 @@ const express = require('express');
 const { chromium } = require('playwright');
 const app = express();
 const cors = require('cors');
+const fs = require('fs');
+const path = require('path');
 app.use(cors());
 
 const port = 3000;
@@ -24,23 +26,53 @@ app.post('/screenshot', async (req, res) => {
     });
     
     const page = await browser.newPage();
-    await page.goto(url, {
-      waitUntil: 'networkidle', 
-      timeout : 10000, // Wait for the full page load (can also use 'networkidle' or 'domcontentloaded')
+    await page.goto(url,{
+      timeout: 20000,
+      waitUntil: 'networkidle',
     });
     
-    await page.waitForTimeout(10000);
+    //await page.waitForTimeout(20000);
+
+    await page.evaluate(async () => {
+      window.scrollTo(0, document.body.scrollHeight);
+      await new Promise(resolve => setTimeout(resolve, 10000)); // Wait for 2 seconds to ensure all content loads
+    });
+
+    const contentSize = await page.evaluate(() => {
+      return {
+        width: document.documentElement.scrollWidth,
+        height: document.documentElement.scrollHeight
+      };
+    });
+
+    await page.setViewportSize({
+      width: contentSize.width,
+      height: contentSize.height,
+    });
+
+    
     // Take screenshot and save it
-    const screenshotPath = `screenshot-${Date.now()}.png`;
-    await page.screenshot({ path: screenshotPath,fullPage: true  });
+    const screenshotPath = path.join(__dirname, `screenshot-${Date.now()}.png`);
+    await page.screenshot({ 
+      path: screenshotPath, fullPage: true 
+    });
 
     await browser.close();
 
     // Send screenshot file as response
-    res.sendFile(__dirname + `/${screenshotPath}`, (err) => {
+    res.sendFile(screenshotPath, (err) => {
       if (err) {
         console.error('Error sending file:', err);  // Log error if sending fails
         res.status(500).send({ error: 'Failed to send screenshot' });
+      } else {
+        // After successfully sending the screenshot, delete the file
+        fs.unlink(screenshotPath, (deleteErr) => {
+          if (deleteErr) {
+            console.error('Error deleting screenshot:', deleteErr);
+          } else {
+            console.log('Screenshot deleted successfully');
+          }
+        });
       }
     });
 
@@ -49,7 +81,6 @@ app.post('/screenshot', async (req, res) => {
     res.status(500).json({ error: 'Error capturing screenshot', details: error.message });
   }
 });
-
 
 // Start server
 app.listen(port, () => {
