@@ -59,8 +59,8 @@ const ScreenshotForm = () => {
   return (
     <>
       <div className="max-w-xl p-6">
-        <div className = "mt-5 text-white  font-bold text-center text-2xl md:text-3xl lg:text-4xl xl:text-5xl ">Looking to Save a Webpage Snapshot?</div>
-        <div className = "text-green-600 font-bold text-md md:text-xl  text-center mb-5 mt-2">Enter The Link Here!</div>
+        <div className = "mt-5 text-white  font-bold text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl ">Looking to Save a Webpage Snapshot?</div>
+        <div className = "text-green-600 font-bold text-md md:text-xl lg:text-2xl text-center mb-5 mt-3">Enter The Link Here!</div>
         <form onSubmit={handleSubmit} className="max-w-full space-y-4">
           <UrlInput url = {url} setUrl = {setUrl}/>
           <SubmitButton loading={loading} />
