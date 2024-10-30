@@ -1,19 +1,24 @@
 // src/ScreenshotForm.jsx
 import { useState } from "react";
-import Header from "./components/header";
-import 'boxicons'
+import UrlInput from "./components/URLinput";
+import SubmitButton from "./components/SubmitButton";
+import ErrorMessage from "./components/ErrorMessage";
+import ScreenshotDisplay from "./components/ScreenshotDisplay";
+import 'boxicons';
 import 'boxicons/css/boxicons.min.css';
+
+
 const ScreenshotForm = () => {
   const [url, setUrl] = useState("");
   const [screenshot, setScreenshot] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [copyText, setCopyText] = useState("Copy Image"); // Initial state for the button text
- const [errorMessage, setErrorMessage] = useState(""); // State to hold error messages
+  const [copyText, setCopyText] = useState("Copy Image");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setErrorMessage(""); // Reset error message on new submission
+    setErrorMessage("");
 
     try {
       const response = await fetch("http://localhost:3000/screenshot", {
@@ -29,13 +34,11 @@ const ScreenshotForm = () => {
         const imageUrl = URL.createObjectURL(blob);
         setScreenshot(imageUrl);
       } else {
-        // Handle different error responses
-        const errorData = await response.json();
-        setErrorMessage("Something went wrong, please check you connection and try again!");
+        setErrorMessage("Something went wrong, please check your connection and try again!");
       }
     } catch (error) {
       console.error("Error:", error);
-      setErrorMessage("Something went wrong, please check you connection and try again!");
+      setErrorMessage("Something went wrong, please check your connection and try again!");
     } finally {
       setLoading(false);
     }
@@ -46,87 +49,32 @@ const ScreenshotForm = () => {
       const img = await fetch(screenshot);
       const blob = await img.blob();
       await navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]);
-
-      // Update button text to "Copied" and reset after 3 seconds
       setCopyText("Copied!");
       setTimeout(() => setCopyText("Copy image"), 3000);
     } catch (error) {
       console.error("Failed to copy image:", error);
     }
   };
+
   return (
     <>
-    <div className="max-w-full p-4 ">
-      <form onSubmit={handleSubmit} className="max-w-xl space-y-4">
-        <div className = "space-y-2">
-          <label htmlFor="url" className=" text-md font-medium text-green-600">
-            Enter URL 
-          </label>
-          <input
-            id="url"
-            type="url"
-            className=" w-full md:max-w-xl p-2 border border-gray-300 rounded-md"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            placeholder="https://example.com"
-            required
+      <div className="max-w-xl p-6">
+        <div className = "mt-5 text-white  font-bold text-center text-2xl md:text-3xl lg:text-4xl xl:text-5xl ">Looking to Save a Webpage Snapshot?</div>
+        <div className = "text-green-600 font-bold text-md md:text-xl  text-center mb-5 mt-2">Enter The Link Here!</div>
+        <form onSubmit={handleSubmit} className="max-w-full space-y-4">
+          <UrlInput url = {url} setUrl = {setUrl}/>
+          <SubmitButton loading={loading} />
+          <ErrorMessage errorMessage={errorMessage} />
+        </form>
+
+        {screenshot && (
+          <ScreenshotDisplay
+            screenshot={screenshot}
+            handleCopyImage={handleCopyImage}
+            copyText={copyText}
           />
-        </div>
-
-        <button
-          type="submit"
-          className="w-full md:max-w-xl py-2 px-4 bg-green-700 text-white rounded-lg hover:bg-green-800"
-          disabled={loading}
-        >
-          {loading ? "Loading..." : "Take Screenshot"}
-        </button>
-        {errorMessage && (
-            <div className="mt-2 text-center text-red-500">
-              {errorMessage}
-            </div>
-          )}
-      </form>
-
-      {screenshot && (
-        <div className="mt-10 max-w-full">
-          <div className = "flex justify-between">
-            <div>
-              <h2 className="text-2xl font-semibold text-green-600">Screenshot</h2>
-            </div>
-            <div>
-              <a 
-                href={screenshot}
-                download="screenshot.png" 
-                className="text-white bg-green-700 px-4 py-2 rounded-lg hover:bg-green-800"
-              >
-                Download Screenshot<i className="bx bxs-download ml-1"></i>
-              </a>
-            </div>
-            
-          </div>
-          
-          <div className="relative max-w-xl shadow-lg mt-2">
-      <img src={screenshot} alt="Screenshot" className="border max-w-full" />
-
-      <button
-        onClick={handleCopyImage}
-        className="absolute top-0 right-0 text-center items-center  opacity-90 bg-slate-800 border-t border-r rounded rounded-r-none text-xs text-white px-2 py-1"
-      >
-        {copyText === "Copied!" ? (
-          <i className='bx bx-check text-sm pr-1' style={{color:'#ffffff'}} ></i>
-        ) : (
-          <i className="bx bx-copy text-xs pr-1" style={{ color: '#ffffff' }}></i>
         )}
-        {copyText}
-      </button>
-    </div>
-
-        </div>
-
-
-        
-      )}
-    </div>
+      </div>
     </>
   );
 };
