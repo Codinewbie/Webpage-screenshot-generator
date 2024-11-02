@@ -10,7 +10,7 @@ function App() {
       <Header />
       <div className="min-h-screen  items-center md:items-start mb-10 sm:mb-1 grid grid-cols-3 md:grid-cols-4 gap-4  w-full">
         <Features/>
-        <div className="pb-10 flex justify-center mb-32 xs:mb-1 xs:items-center max-w-xl sm:max-w-full mt-24 col-span-3" > 
+        <div className="pb-10 flex justify-center xs:mb-1 xs:items-center mt-4 max-w-xl sm:max-w-full col-span-3" > 
           <ScreenshotForm/> 
         </div>
       </div> 

@@ -6,10 +6,12 @@ import ErrorMessage from "./components/ErrorMessage";
 import ScreenshotDisplay from "./components/ScreenshotDisplay";
 import 'boxicons';
 import 'boxicons/css/boxicons.min.css';
+import Dropdown from "./components/Dropdown";
 
 
 const ScreenshotForm = () => {
   const [url, setUrl] = useState("");
+  const [format,setFormat] = useState("png");
   const [screenshot, setScreenshot] = useState(null);
   const [loading, setLoading] = useState(false);
   const [copyText, setCopyText] = useState("Copy Image");
@@ -26,8 +28,9 @@ const ScreenshotForm = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ url }),
+        body: JSON.stringify({ url , format }),
       });
+      console.log('Submitting:', { url, format });
 
       if (response.ok) {
         const blob = await response.blob();
@@ -63,7 +66,9 @@ const ScreenshotForm = () => {
         <div className = "text-green-600 font-bold text-md md:text-xl lg:text-2xl text-center mb-5 mt-3">Enter The Link Here!</div>
         <form onSubmit={handleSubmit} className="max-w-full space-y-4">
           <UrlInput url = {url} setUrl = {setUrl}/>
+          <Dropdown format = {format} setFormat = {setFormat} setScreenshot={setScreenshot}/>
           <SubmitButton loading={loading} />
+          
           <ErrorMessage errorMessage={errorMessage} />
         </form>
 
@@ -72,6 +77,7 @@ const ScreenshotForm = () => {
             screenshot={screenshot}
             handleCopyImage={handleCopyImage}
             copyText={copyText}
+            format = {format}
           />
         )}
       </div>

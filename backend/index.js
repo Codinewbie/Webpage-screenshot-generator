@@ -14,6 +14,7 @@ app.use(express.json());
 // Route to take a screenshot
 app.post('/screenshot', async (req, res) => {
   const { url } = req.body;
+  const {format} = req.body;
 
   if (!url) {
     return res.status(400).json({ error: 'URL is required' });
@@ -52,10 +53,22 @@ app.post('/screenshot', async (req, res) => {
 
     
     // Take screenshot and save it
-    const screenshotPath = path.join(__dirname, `screenshot-${Date.now()}.png`);
-    await page.screenshot({ 
-      path: screenshotPath, fullPage: true 
-    });
+    console.log('Submitting:', { url, format });
+
+    const screenshotPath = path.join(__dirname, `screenshot-${Date.now()}.${format}`);
+    if (format === 'pdf') {
+      await page.pdf({
+        path: screenshotPath,
+        format: 'A4', // Or other formats like 'Letter', 'Legal', etc.
+      });
+    } else {
+      await page.screenshot({
+        path: screenshotPath,
+        fullPage: true,
+        type: 'png' // Ensure 'format' is either 'png' or 'jpeg'
+      });
+    }
+    
 
     await browser.close();
 
@@ -70,6 +83,8 @@ app.post('/screenshot', async (req, res) => {
           if (deleteErr) {
             console.error('Error deleting screenshot:', deleteErr);
           } else {
+              // Take screenshot and save it
+            console.log('Submitting:', { url, format });
             console.log('Screenshot deleted successfully');
           }
         });
