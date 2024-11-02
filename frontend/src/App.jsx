@@ -18,8 +18,4 @@ function App() {
     </div>
   )
 }
-
 export default App
- {/* <div className = "w-full h-20 opacity-95 bg-slate-900"></div>
-        <div className = "w-full h-12 opacity-60 bg-slate-950"></div>
-             */}

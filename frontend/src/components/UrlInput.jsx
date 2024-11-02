@@ -1,4 +1,3 @@
-// src/components/UrlInput.jsx
 import React from 'react';
 
 const UrlInput = ({ url, setUrl }) => (

@@ -1,4 +1,4 @@
-import React from 'react';// src/components/CopyButton.jsx
+import React from 'react';
 
 const CopyButton = ({ handleCopyImage, copyText }) => (
   <button
