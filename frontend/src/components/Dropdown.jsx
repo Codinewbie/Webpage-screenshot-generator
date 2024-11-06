@@ -30,10 +30,10 @@ const Dropdown = ({format , setFormat, setScreenshot}) => {
     }, []);
 
     return (
-        <div className="relative inline-block text-center" ref={dropdownRef}>
+        <div className="relative text-center" ref={dropdownRef}>
             <button 
                 onClick={toggleDropdown} 
-                className="text-white bg-green-700 hover:bg-green-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" 
+                className="text-white text-cent bg-slate-600 hover:bg-slate-700 focus:ring-1 focus:outline-none focus:ring-green-600 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" 
                 type="button"
             >
                 {selectedOption} 
@@ -44,7 +44,7 @@ const Dropdown = ({format , setFormat, setScreenshot}) => {
 
             {/* Dropdown menu */}
             {isOpen && (
-                <div className="absolute left-1/2 transform -translate-x-1/2 z-10 w-48 bg-slate-800 divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 mt-2">
+                <div className="absolute left-1/2 transform -translate-x-1/2 z-10 w-36 md:w-48 bg-slate-800 divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 mt-2">
                     <ul className="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200">
                         <li>
                             <div

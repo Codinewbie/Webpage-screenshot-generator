@@ -7,6 +7,7 @@ import ScreenshotDisplay from "./components/ScreenshotDisplay";
 import 'boxicons';
 import 'boxicons/css/boxicons.min.css';
 import Dropdown from "./components/Dropdown";
+import OnePage from "./components/Onepage";
 
 
 const ScreenshotForm = () => {
@@ -16,6 +17,7 @@ const ScreenshotForm = () => {
   const [loading, setLoading] = useState(false);
   const [copyText, setCopyText] = useState("Copy Image");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isFullSize, setIsFullSize] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,9 +30,9 @@ const ScreenshotForm = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ url , format }),
+        body: JSON.stringify({ url , format , isFullSize }),
       });
-      console.log('Submitting:', { url, format });
+    //  console.log('Submitting:', { url, format });
 
       if (response.ok) {
         const blob = await response.blob();
@@ -59,6 +61,9 @@ const ScreenshotForm = () => {
     }
   };
 
+  const handleToggleChange = (value) => {
+    setIsFullSize(value);
+  };
   return (
     <>
       <div className="max-w-xl p-6">
@@ -66,9 +71,12 @@ const ScreenshotForm = () => {
         <div className = "text-green-600 font-bold text-md md:text-xl lg:text-2xl text-center mb-5 mt-3">Enter The Link Here!</div>
         <form onSubmit={handleSubmit} className="max-w-full space-y-4">
           <UrlInput url = {url} setUrl = {setUrl}/>
-          <Dropdown format = {format} setFormat = {setFormat} setScreenshot={setScreenshot}/>
+          <div className = "flex flex-cols items-center justify-between space-x-4">
+            <Dropdown format = {format} setFormat = {setFormat} setScreenshot={setScreenshot}/>
+            <OnePage onToggleChange = {handleToggleChange}/>
+     
+          </div>
           <SubmitButton loading={loading} />
-          
           <ErrorMessage errorMessage={errorMessage} />
         </form>
 

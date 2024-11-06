@@ -14,12 +14,12 @@ const ScreenshotDisplay = ({ screenshot, handleCopyImage, copyText, format }) =>
           Download Screenshot<i className="bx bxs-download ml-1 w-1 h-1"></i>
         </a>
       </div>
-      <div className="relative overflow-y-auto h-96 max-w-2xl shadow-lg mt-4">
+      <div className="relative overflow-y-auto h-screen max-w-2xl shadow-lg mt-4">
         {format === 'pdf' ? (
           <iframe 
             src={screenshot} 
             title="Screenshot PDF" 
-            className="border min-w-full max-w-full h-80"
+            className="border min-w-full h-screen max-w-full"
             frameBorder="0"
           ></iframe>
         ) : (
