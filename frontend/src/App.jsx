@@ -6,7 +6,7 @@ import Header from './components/header'
 function App() {
 
   return (
-    <div id= "Home"className="flex flex-col  backdrop-opacity-95 bg-gradient-to-b from-slate-900 to-slate-800">
+    <div id= "Home" className="flex flex-col  backdrop-opacity-95 bg-gradient-to-b from-slate-900 to-slate-800">
       <Header />
       <div className="min-h-screen  items-center md:items-start mb-10 sm:mb-1 grid grid-cols-3 md:grid-cols-4 gap-4  w-full">
         <Features/>

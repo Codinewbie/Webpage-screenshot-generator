@@ -26,8 +26,7 @@ const Header = () => {
 }, []);
   return (
     <div  className = "sticky mx-0 top-0 z-[1000] bg-slate-800  border-b border-b-green-600 " ref = {dropdownRef}>
-    <div className=" mx-4 ">
-      <div className="flex items-center justify-between py-2 md:py-4 ">
+      <div className="flex mx-4 items-center justify-between py-2 md:py-4 ">
         <Link to = "Home" smooth = {true} duration={300} className ="duration-300 font-bold z-[1] text-green-600 cursor-pointer">
           SnapTheWeb
         </Link>
@@ -70,8 +69,6 @@ const Header = () => {
         </ul>
         </div>
       </div>
-      
-    </div>
     </div>
   );
 };
