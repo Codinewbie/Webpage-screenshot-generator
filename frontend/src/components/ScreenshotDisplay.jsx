@@ -25,7 +25,10 @@ const ScreenshotDisplay = ({ screenshot, handleCopyImage, copyText, format }) =>
         ) : (
           <img src={screenshot} alt="Screenshot" className="border max-w-full" />
         )}
-        {format!=='pdf' ? (<CopyButton handleCopyImage={handleCopyImage} copyText={copyText} />) : (<></>)  }
+        {format!=='pdf' && (
+          <CopyButton handleCopyImage={handleCopyImage} copyText={copyText} />
+        )
+        }
         
         
       </div>

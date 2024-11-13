@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 
 const OnePage = ({onToggleChange}) => {
     const [isFullSize, setIsFullSize] = useState(false);

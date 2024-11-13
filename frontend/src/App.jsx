@@ -1,8 +1,8 @@
 import './App.css'
 import ScreenshotForm from './ScreenshotForm'
-import Header from './components/Header'
 import Features from './components/Features'
 import Contact from './components/Contact'
+import Header from './components/header'
 function App() {
 
   return (

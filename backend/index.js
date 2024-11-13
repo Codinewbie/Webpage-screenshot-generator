@@ -13,8 +13,7 @@ app.use(express.json());
 
 // Route to take a screenshot
 app.post('/screenshot', async (req, res) => {
-  const { url } = req.body;
-  const {format} = req.body;
+  const { url, format , isFullSize } = req.body;
 
   if (!url) {
     return res.status(400).json({ error: 'URL is required' });
@@ -27,45 +26,60 @@ app.post('/screenshot', async (req, res) => {
     });
     
     const page = await browser.newPage();
-    await page.goto(url,{
-      timeout: 20000,
-      waitUntil: 'networkidle',
-    });
-    
-    //await page.waitForTimeout(20000);
+      await page.goto(url,{
+        timeout: 20000,
+        waitUntil: 'networkidle',
+      });
+      
+      
+      await page.evaluate(async () => {
+        window.scrollTo(0, document.body.scrollHeight);
+        await new Promise(resolve => setTimeout(resolve, 10000)); // Wait for 2 seconds to ensure all content loads
+      });
+      
+      if(isFullSize){
+      const contentSize = await page.evaluate(() => {
+        return {
+          width: document.documentElement.scrollWidth,
+          height: document.documentElement.scrollHeight
+        };
+      });
 
-    await page.evaluate(async () => {
-      window.scrollTo(0, document.body.scrollHeight);
-      await new Promise(resolve => setTimeout(resolve, 10000)); // Wait for 2 seconds to ensure all content loads
-    });
+      await page.setViewportSize({
+        width: contentSize.width,
+        height: contentSize.height,
+      });
 
-    const contentSize = await page.evaluate(() => {
-      return {
-        width: document.documentElement.scrollWidth,
-        height: document.documentElement.scrollHeight
-      };
-    });
-
-    await page.setViewportSize({
-      width: contentSize.width,
-      height: contentSize.height,
-    });
+    }
 
     
     // Take screenshot and save it
-    console.log('Submitting:', { url, format });
+   // console.log('Submitting:', { url, format });
 
     const screenshotPath = path.join(__dirname, `screenshot-${Date.now()}.${format}`);
     if (format === 'pdf') {
-      await page.pdf({
-        path: screenshotPath,
-        format: 'A4', // Or other formats like 'Letter', 'Legal', etc.
-      });
+      if(isFullSize){
+        await page.pdf({
+          path: screenshotPath,
+          format: 'A4',
+          printBackground: true, // Or other formats like 'Letter', 'Legal', etc.
+        });
+      }
+      else{
+        await page.pdf({
+          path: screenshotPath,
+          width: '1280px',  // Example fixed width for single-page view
+          height: '720px',  // Example fixed height for single-page view
+          printBackground: true,// Or other formats like 'Letter', 'Legal', etc.
+        });
+        
+      }
     } else {
       await page.screenshot({
         path: screenshotPath,
-        fullPage: true,
-        type: 'png' // Ensure 'format' is either 'png' or 'jpeg'
+        fullPage: isFullSize,
+        type: 'png',
+        // Ensure 'format' is either 'png' or 'jpeg'
       });
     }
     

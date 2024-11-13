@@ -1,6 +1,6 @@
 // src/ScreenshotForm.jsx
 import { useState } from "react";
-import UrlInput from "./components/URLinput";
+import UrlInput from "./components/UrlInput";
 import SubmitButton from "./components/SubmitButton";
 import ErrorMessage from "./components/ErrorMessage";
 import ScreenshotDisplay from "./components/ScreenshotDisplay";

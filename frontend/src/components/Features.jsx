@@ -8,10 +8,10 @@ const Features = () => {
                 Features
           </div>
           <div className = "px-2 mx-2 py-3 rounded-md border border-green-600 md:text-md lg:text-lg xl:text-xl  justify-center items-center center font-semibold text-center bg-slate-900 hover:bg-slate-950 mr-2 ">
-                Generate a <span className="text-green-600 font-bold ">full-page</span> image of the webpage.
+                Generate a <span className="text-green-600 font-bold ">Full-page/One-page</span> image of the webpage.
           </div>
           <div className = "px-2 py-3 mx-2 border border-green-600 rounded-md md:text-md lg:text-lg xl:text-xl  font-semibold text-center bg-slate-900 hover:bg-slate-950 mr-2 ">
-                Save the screenshot as a <span className="text-green-600 font-bold ">PNG</span> file.
+                Save the screenshot as a <span className="text-green-600 font-bold ">.png/.jpg/.pdf</span> file.
           </div>
           <div className = "px-2 py-3 mx-2 rounded-md border border-green-600 md:text-md  lg:text-lg xl:text-xl font-semibold text-center bg-slate-900 hover:bg-slate-950  mr-2 ">
                 <span className="text-green-600 font-bold ">Copy</span> the image directly for easy sharing.
