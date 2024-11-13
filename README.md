@@ -55,6 +55,18 @@ A modern web application that allows users to capture full-page or single-page s
     - Open your browser and visit:
       ```bash
       http://localhost:3000
+## 📄 API Endpoints
 
-    
+### `POST /screenshot`
 
+Captures a screenshot based on the provided URL and format.
+
+- Request Body:
+   ```bash
+   {
+     "url": "https://example.com",
+     "format": "png" // Options: 'png', 'jpg', 'pdf'
+   }
+
+- Request Body:
+  - Returns the screenshot as a downloadable file.
