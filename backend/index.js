@@ -10,7 +10,7 @@ const port = 3000;
 
 // Middleware to parse JSON requests
 app.use(express.json());
-
+app.use('/*', cors());
 // Route to take a screenshot
 app.post('/screenshot', async (req, res) => {
   const { url, format , isFullSize } = req.body;
