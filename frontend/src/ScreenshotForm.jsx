@@ -32,7 +32,7 @@ const ScreenshotForm = () => {
         },
         body: JSON.stringify({ url , format , isFullSize }),
       });
-    //  console.log('Submitting:', { url, format });
+     //console.log('Submitting:', { url, format });
 
       if (response.ok) {
         const blob = await response.blob();
