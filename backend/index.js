@@ -4,13 +4,17 @@ const app = express();
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
-app.use(cors());
 
 const port = 3000;
 
 // Middleware to parse JSON requests
 app.use(express.json());
-app.use('/*', cors());
+app.use(cors({
+  origin: '*', // Allow all origins (or specify your frontend URL in production)
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type'],
+}));
+
 // Route to take a screenshot
 app.post('/screenshot', async (req, res) => {
   const { url, format , isFullSize } = req.body;
@@ -111,7 +115,9 @@ app.post('/screenshot', async (req, res) => {
   }
 });
 
+module.exports = app;
+
 // Start server
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Server running at http://localhost:${port}`);
+// });
