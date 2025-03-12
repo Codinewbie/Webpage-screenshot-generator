@@ -5,7 +5,7 @@ const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 
-const port = 3000;
+// const port = 3000;
 
 // Middleware to parse JSON requests
 app.use(express.json());
@@ -16,7 +16,7 @@ app.use(cors({
 }));
 
 // Route to take a screenshot
-app.post('/screenshot', async (req, res) => {
+app.post('/api/screenshot', async (req, res) => {
   const { url, format , isFullSize } = req.body;
 
   if (!url) {
