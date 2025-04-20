@@ -5,7 +5,7 @@ const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 
-// const port = 3000;
+const port = 3000;
 
 // Middleware to parse JSON requests
 app.use(express.json());
@@ -115,9 +115,9 @@ app.post('/api/screenshot', async (req, res) => {
   }
 });
 
-module.exports = app;
+// module.exports = app;
 
 // Start server
-// app.listen(port, () => {
-//   console.log(`Server running at http://localhost:${port}`);
-// });
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});

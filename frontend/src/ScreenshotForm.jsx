@@ -25,7 +25,7 @@ const ScreenshotForm = () => {
     setErrorMessage("");
 
     try {
-      const response = await fetch("http://localhost:3000/screenshot", {
+      const response = await fetch("http://localhost:3000/api/screenshot", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,11 +39,11 @@ const ScreenshotForm = () => {
         const imageUrl = URL.createObjectURL(blob);
         setScreenshot(imageUrl);
       } else {
-        setErrorMessage("Something went wrong, please check your connection and try again!");
+        setErrorMessage("LALA Something went wrong, please check your connection and try again!");
       }
     } catch (error) {
       console.error("Error:", error);
-      setErrorMessage("Something went wrong, please check your connection and try again!");
+      setErrorMessage("NONO Something went wrong, please check your connection and try again!");
     } finally {
       setLoading(false);
     }
