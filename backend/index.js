@@ -26,8 +26,8 @@ app.post('/api/screenshot', async (req, res) => {
   try {
     // Launch Microsoft Edge (Chromium-based)
     const browser = await chromium.launch({
-      executablePath: undefined,  // Adjust the path for your system
-    });
+      headless: true,
+    });    
     
     const page = await browser.newPage();
       await page.goto(url,{
