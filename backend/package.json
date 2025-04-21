@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-  "start": "node index.js",
-  "postinstall": "npx playwright install"
-},
+    "start": "node index.js",
+    "postinstall": "npx playwright install"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.21.1",
-    "playwright": "^1.50.1"
+    "playwright": "^1.52.0"
   }
 }
